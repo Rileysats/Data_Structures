@@ -10,7 +10,7 @@ class Node{
     Node(int d){
       data = d;
     }
-
+    // insert node with value at index given
     void insert(int index, int val){
       Node* n = this;
       Node* insert = new Node(val);
@@ -21,21 +21,43 @@ class Node{
           insert->next = n->next;
           n->next = insert;
           insert->prev = n;
-          break;
+          return;
         }
         else{
           n = n->next;
-          count= count + 1;
+          count++;
         }
       }
     }
-
-    void remove(int n){}
-
-    void display(int n){
-      std::cout << this->data;
+    // remove nodes from linked list and patch the list
+    void remove(int index){
+      Node* n = this;
+      int count = 0;
+      while (n->next != nullptr){
+        if (index == count){
+          n->prev->next = n->next;
+          n->next->prev = n->prev;
+          return;
+        }
+        n = n->next;
+        count++;
+      }
+      
     }
-
+    // gets value at given the given index otherwise return -1
+    int get_index(int index){
+      Node* n = this;
+      int count = 0;
+      while (n->next != nullptr){
+        if (count == index){
+          return n->data;
+        }
+        n = n->next;
+        count++;
+      }
+      return -1;
+    }
+    // Displays all values in linked list
     void display_all(){
       Node* n = this;
       std::cout << n->data << std::endl;
@@ -45,7 +67,7 @@ class Node{
         std::cout << n->data << std::endl;
       }
     }
-
+    // appends to linked list
     void append(int val){
         Node* end = new Node(val);
         Node* n = this; 
@@ -56,16 +78,3 @@ class Node{
         end->prev = n;
     }
 };
-
-int main(){
-
-  Node n(5);
-  n.append(1);
-  n.append(2);
-  n.append(3);
-  n.append(4);
-  n.display_all();
-  std::cout << "\n\n";
-  n.insert(2, 99);
-  n.display_all();
-}
